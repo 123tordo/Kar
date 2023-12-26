@@ -33,7 +33,7 @@
 <body>
 
 <div id="text-container">
-  Lança o dado outra vez e le o código
+  Prepara-te, agora é a tua vez de cantar, carrega no play
 </div>
 
 <div id="video-container"></div>
@@ -54,42 +54,47 @@
     const videoContainer = document.getElementById('video-container');
     const textContainer = document.getElementById('text-container');
 
-    // Hide text container and show video container
-    textContainer.style.display = 'none';
-    videoContainer.style.display = 'block';
+    // Show the text container and hide the video container
+    textContainer.style.display = 'block';
+    videoContainer.style.display = 'none';
 
-    const randomVideoUrl = getRandomVideo();
+    // Set the initial text
+    textContainer.innerHTML = 'Prepara-te, agora é a tua vez de cantar, carrega no play';
 
-    // Create an iframe element with the random video URL
-    const iframe = document.createElement('iframe');
-    iframe.src = randomVideoUrl;
-    iframe.width = '100%';
-    iframe.height = '100%';
-    iframe.allow = 'autoplay; encrypted-media';
-
-    // Append the iframe to the video container
-    videoContainer.innerHTML = '';
-    videoContainer.appendChild(iframe);
-
-    // Show the video container for 120 seconds
+    // After 6 seconds, hide text container and show video container
     setTimeout(function () {
+      textContainer.style.display = 'none';
+      videoContainer.style.display = 'block';
+
+      const randomVideoUrl = getRandomVideo();
+
+      // Create an iframe element with the random video URL
+      const iframe = document.createElement('iframe');
+      iframe.src = randomVideoUrl;
+      iframe.width = '100%';
+      iframe.height = '100%';
+      iframe.allow = 'autoplay; encrypted-media';
+
+      // Append the iframe to the video container
+      videoContainer.innerHTML = '';
+      videoContainer.appendChild(iframe);
+
       // After 120 seconds, hide video container and show text container
-      videoContainer.style.display = 'none';
-      textContainer.style.display = 'block';
-    }, 120000);
+      setTimeout(function () {
+        videoContainer.style.display = 'none';
+        textContainer.style.display = 'block';
+
+        // Set the second text
+        textContainer.innerHTML = 'Lança o dado outra vez e le o código';
+
+        // Repeat the process after a 6-second delay
+        setTimeout(playRandomVideo, 6000);
+      }, 120000);
+    }, 6000);
   }
 
   // Start playing the random video when the page loads
-  window.onload = function () {
-    // Play the first video
-    playRandomVideo();
-
-    // After 120 seconds, hide text container and play a new random video
-    setTimeout(function () {
-      textContainer.style.display = 'none';
-      playRandomVideo();
-    }, 120000);
-  };
+  window.onload = playRandomVideo;
 </script>
 
 </body>
