@@ -3,20 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Cube Page</title>
+  <title>Dynamic Page</title>
   <style>
     body {
-      background-color: black;
+      margin: 0;
+      overflow: hidden;
+    }
+    #video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    #text-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       color: red;
-      font-size: 22px;
+      font-size: 20px;
       text-align: center;
-      padding: 20px;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <script>
-    const videoUrls = [
+
+<div id="text-container">
+  Prepara-te, agora é a tua vez de cantar, carrega no play
+</div>
+
+<div id="video-container"></div>
+
+<script>
+  function getRandomVideo() {
+    const videoList = [
       "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
       "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=5",
       "https://www.youtube.com/embed/1Fv5IVf9KAc?feature=shared&t=20",
@@ -61,68 +84,44 @@
       "https://www.youtube.com/embed/HuYMpOlYGZM?feature=shared&t=2"
     ];
 
-    function playVideo() {
-      const randomIndex = Math.floor(Math.random() * videoUrls.length);
-      const videoUrl = videoUrls[randomIndex];
+    const randomIndex = Math.floor(Math.random() * videoList.length);
+    return videoList[randomIndex];
+  }
 
-      const videoPage = window.open('', '_blank', 'width=800,height=600');
-      const videoContent = `
-        <html>
-          <head>
-            <style>
-              body {
-                background-color: black;
-                color: red;
-                font-size: 22px;
-                text-align: center;
-              }
-            </style>
-          </head>
-          <body>
-            <div>Prepara-te agora é a tua vez de cantar, carrega no PLAY!</div>
-            <iframe width="560" height="315" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
-            <script>
-              setTimeout(() => {
-                window.close();
-                openQRPage();
-              }, 6000);
-            </script>
-          </body>
-        </html>
-      `;
+  function playRandomVideo() {
+    const videoContainer = document.getElementById('video-container');
+    const textContainer = document.getElementById('text-container');
 
-      videoPage.document.open();
-      videoPage.document.write(videoContent);
-      videoPage.document.close();
-    }
+    // Show video container and hide text container
+    videoContainer.style.display = 'block';
+    textContainer.style.display = 'none';
 
-    function openQRPage() {
-      const qrPage = window.open('', '_blank', 'width=800,height=600');
-      const qrContent = `
-        <html>
-          <head>
-            <style>
-              body {
-                background-color: black;
-                color: red;
-                font-size: 22px;
-                text-align: center;
-                padding: 20px;
-              }
-            </style>
-          </head>
-          <body>
-            <div>Lança o dado outra vez e lê o QR Cube</div>
-          </body>
-        </html>
-      `;
+    const randomVideoUrl = getRandomVideo();
 
-      qrPage.document.open();
-      qrPage.document.write(qrContent);
-      qrPage.document.close();
-    }
-  </script>
+    // Create an iframe element with the random video URL
+    const iframe = document.createElement('iframe');
+    iframe.src = randomVideoUrl;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.allow = 'autoplay; encrypted-media';
+    iframe.onload = function () {
+      setTimeout(function () {
+        // After 6 seconds, hide video container, show text container, and remove the iframe
+        videoContainer.style.display = 'none';
+        textContainer.style.display = 'block';
+        videoContainer.innerHTML = '';
+        // Play the next random video after 2 seconds
+        setTimeout(playRandomVideo, 2000);
+      }, 6000);
+    };
 
-  <button onclick="playVideo()">Play Video</button>
+    // Append the iframe to the video container
+    videoContainer.appendChild(iframe);
+  }
+
+  // Start playing the random video when the page loads
+  window.onload = playRandomVideo;
+</script>
+
 </body>
 </html>
