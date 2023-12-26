@@ -8,6 +8,9 @@
     body {
       margin: 0;
       overflow: hidden;
+      background-color: black;
+      color: red;
+      font-size: 24px;
     }
     #video-container {
       position: absolute;
@@ -22,17 +25,15 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: red;
-      font-size: 20px;
       text-align: center;
-      display: block;
+      display: none;
     }
   </style>
 </head>
 <body>
 
 <div id="text-container">
-  Prepara-te, agora é a tua vez de cantar, carrega no play
+  Lança o dado outra vez e le o código
 </div>
 
 <div id="video-container"></div>
@@ -40,8 +41,8 @@
 <script>
   function getRandomVideo() {
     const videoList = [
-      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
-      "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=5",
+      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=120",
+      "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=120",
       // Add the remaining video URLs here
     ];
 
@@ -53,44 +54,42 @@
     const videoContainer = document.getElementById('video-container');
     const textContainer = document.getElementById('text-container');
 
-    // Show text container and hide video container
-    textContainer.style.display = 'block';
-    videoContainer.style.display = 'none';
+    // Hide text container and show video container
+    textContainer.style.display = 'none';
+    videoContainer.style.display = 'block';
 
     const randomVideoUrl = getRandomVideo();
 
-    // Display the initial text for 6 seconds
+    // Create an iframe element with the random video URL
+    const iframe = document.createElement('iframe');
+    iframe.src = randomVideoUrl;
+    iframe.width = '100%';
+    iframe.height = '100%';
+    iframe.allow = 'autoplay; encrypted-media';
+
+    // Append the iframe to the video container
+    videoContainer.innerHTML = '';
+    videoContainer.appendChild(iframe);
+
+    // Show the video container for 120 seconds
     setTimeout(function () {
-      // Hide text container and show video container
-      textContainer.style.display = 'none';
-      videoContainer.style.display = 'block';
-
-      // Create an iframe element with the random video URL
-      const iframe = document.createElement('iframe');
-      iframe.src = randomVideoUrl;
-      iframe.width = '100%';
-      iframe.height = '100%';
-      iframe.allow = 'autoplay; encrypted-media';
-      iframe.onload = function () {
-        // After the video is loaded, wait for it to end
-        iframe.contentDocument.addEventListener('ended', function () {
-          // After the video ends, hide video container and show text container
-          videoContainer.style.display = 'none';
-          textContainer.style.display = 'block';
-
-          // Play the next random video after a delay
-          setTimeout(playRandomVideo, 2000);
-        });
-      };
-
-      // Append the iframe to the video container
-      videoContainer.innerHTML = '';
-      videoContainer.appendChild(iframe);
-    }, 6000);
+      // After 120 seconds, hide video container and show text container
+      videoContainer.style.display = 'none';
+      textContainer.style.display = 'block';
+    }, 120000);
   }
 
   // Start playing the random video when the page loads
-  window.onload = playRandomVideo;
+  window.onload = function () {
+    // Play the first video
+    playRandomVideo();
+
+    // After 120 seconds, hide text container and play a new random video
+    setTimeout(function () {
+      textContainer.style.display = 'none';
+      playRandomVideo();
+    }, 120000);
+  };
 </script>
 
 </body>
