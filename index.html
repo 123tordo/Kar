@@ -1,57 +1,11 @@
-<!DOCTYPE html>
-<html lang="pt-PT">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Page</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background-color: black;
-    }
-
-    #intro-text, #outro-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-size: 24px;
-      color: red;
-      display: none;
-    }
-
-    #intro-text {
-      animation: fadeOut 4s forwards;
-    }
-
-    video {
-      width: 100%;
-      height: auto;
-      display: none;
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="intro-text">Prepara-te, agora é a tua vez de cantar</div>
-  <div id="video-container"></div>
-  <div id="outro-text">Lançar o dado outra vez e ler o código</div>
-
-  <script>
+ <script>
     document.addEventListener("DOMContentLoaded", function() {
       const introText = document.getElementById("intro-text");
       const videoContainer = document.getElementById("video-container");
       const outroText = document.getElementById("outro-text");
 
       // Show intro text in red for 4 seconds
+      introText.style.display = "block";
       setTimeout(() => {
         introText.style.display = "none";
         videoContainer.style.display = "block";
@@ -102,7 +56,7 @@
           "https://www.youtube.com/embed/HuYMpOlYGZM?feature=shared&t=2"
         ];
 
-        // Select a random video URL
+      // Select a random video URL
         const randomVideoUrl = videoUrls[Math.floor(Math.random() * videoUrls.length)];
 
         // Embed the video
@@ -110,28 +64,21 @@
         videoElement.src = randomVideoUrl;
         videoElement.width = "560";
         videoElement.height = "315";
-        videoElement.allowfullscreen = true;
+        videoElement.allow = "autoplay; encrypted-media";
+        videoElement.allowFullscreen = true;
 
-        // Play the video
+        // Append the video
         videoContainer.appendChild(videoElement);
 
         // Close the video and show outro text when it ends
         videoElement.addEventListener("load", () => {
-          videoElement.contentWindow.document.addEventListener("ended", () => {
+          setTimeout(() => {
             videoContainer.style.display = "none";
             outroText.style.display = "block";
-
-            // Hide outro text after 5 seconds
-            setTimeout(() => {
-              outroText.style.display = "none";
-              // Repeat the process with a different random video
-              document.location.reload(true);
-            }, 5000);
-          });
+          }, videoElement.duration * 1000);
         });
       }, 4000);
     });
   </script>
 </body>
 </html>
-
