@@ -24,15 +24,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      font-size: 22px;
+      font-size: 26px;
       color: red;
       display: none;
       z-index: 2; /* Place text on top of the video */
     }
 
     #video-container {
-      width: 600px;
-      height: 350px;
+      width: 500px;
+      height: 300px;
       position: relative;
     }
 
@@ -126,8 +126,8 @@
 
         // Create an iframe for the video
         const videoPlayer = document.createElement("iframe");
-        videoPlayer.width = "600";
-        videoPlayer.height = "350";
+        videoPlayer.width = "500";
+        videoPlayer.height = "300";
         videoPlayer.src = randomVideoUrl;
         videoPlayer.frameborder = "0";
         videoPlayer.allowfullscreen = true;
@@ -142,7 +142,7 @@
           overlay.style.display = "block";
           outroText.style.display = "block";
         }, videoDuration);
-      }, 3000);
+      }, 6000);
     });
   </script>
 </body>
