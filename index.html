@@ -135,14 +135,13 @@
         // Append the videoPlayer to the videoContainer
         videoContainer.appendChild(videoPlayer);
 
-        // Close the video and show outro text when it ends
-        videoPlayer.addEventListener("load", () => {
-          videoPlayer.contentWindow.document.querySelector("video").addEventListener("ended", () => {
-            videoContainer.style.display = "none";
-            overlay.style.display = "block";
-            outroText.style.display = "block";
-          });
-        });
+        // Wait for the video duration and then display the overlay and outro text
+        const videoDuration = 30000; // Update with the actual duration of your videos in milliseconds
+        setTimeout(() => {
+          videoContainer.style.display = "none";
+          overlay.style.display = "block";
+          outroText.style.display = "block";
+        }, videoDuration);
       }, 4000);
     });
   </script>
