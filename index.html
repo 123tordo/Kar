@@ -62,7 +62,7 @@
 
         // List of video URLs
         const videoUrls = [
-      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
+          "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
           "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=5",
           "https://www.youtube.com/embed/1Fv5IVf9KAc?feature=shared&t=20",
           "https://www.youtube.com/embed/rN2Q76xR6eE?feature=shared&t=10",
@@ -104,33 +104,28 @@
           "https://www.youtube.com/embed/S3wWfdBf-KU?feature=shared&t=3",
           "https://www.youtube.com/embed/EE587fvNfCQ?feature=shared&t=3",
           "https://www.youtube.com/embed/HuYMpOlYGZM?feature=shared&t=2"
-      ];
+     ];
 
         // Select a random video URL
         const randomVideoUrl = videoUrls[Math.floor(Math.random() * videoUrls.length)];
 
-        // Embed the video using YouTube Iframe API
-        const iframeElement = document.createElement("iframe");
-        iframeElement.width = "800";
-        iframeElement.height = "450";
-        iframeElement.src = randomVideoUrl;
-        iframeElement.allowFullscreen = true;
-        iframeElement.setAttribute("frameborder", "0");
-        iframeElement.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+        // Create an iframe for the video
+        const videoPlayer = document.createElement("iframe");
+        videoPlayer.width = "800";
+        videoPlayer.height = "450";
+        videoPlayer.src = randomVideoUrl;
+        videoPlayer.frameborder = "0";
+        videoPlayer.allowfullscreen = true;
 
-        // Append the iframe
-        videoContainer.appendChild(iframeElement);
+        // Append the videoPlayer to the videoContainer
+        videoContainer.appendChild(videoPlayer);
 
         // Close the video and show outro text when it ends
-        iframeElement.addEventListener("load", () => {
-          const videoPlayer = iframeElement.contentWindow.document.querySelector("video");
-
-          if (videoPlayer) {
-            videoPlayer.addEventListener("ended", () => {
-              videoContainer.style.display = "none";
-              outroText.style.display = "block";
-            });
-          }
+        videoPlayer.addEventListener("load", () => {
+          videoPlayer.contentWindow.document.querySelector("video").addEventListener("ended", () => {
+            videoContainer.style.display = "none";
+            outroText.style.display = "block";
+          });
         });
       }, 4000);
     });
