@@ -79,7 +79,7 @@
       videoContainer.innerHTML = '';
       videoContainer.appendChild(iframe);
 
-      // After 60 seconds, stop the video and show text container
+      // After 60 seconds, stop the video, hide video container, and show text container
       setTimeout(function () {
         iframe.src = '';  // Stop the video
         videoContainer.style.display = 'none';
@@ -94,8 +94,7 @@
   // Start playing the random video when the page loads
   window.onload = playRandomVideo;
 
-  // Repeat the process after a 60-second delay
-  setInterval(playRandomVideo, 60000);
+  // Do not repeat the process after the initial execution
 </script>
 
 </body>
