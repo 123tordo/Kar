@@ -41,8 +41,8 @@
 <script>
   function getRandomVideo() {
     const videoList = [
-      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=120",
-      "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=120",
+      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=60",
+      "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=60",
       // Add the remaining video URLs here
     ];
 
@@ -79,7 +79,7 @@
       videoContainer.innerHTML = '';
       videoContainer.appendChild(iframe);
 
-      // After 120 seconds, stop the video, hide video container, and show text container
+      // After 60 seconds, stop the video and show text container
       setTimeout(function () {
         iframe.src = '';  // Stop the video
         videoContainer.style.display = 'none';
@@ -87,15 +87,15 @@
 
         // Set the second text
         textContainer.innerHTML = 'Lança o dado outra vez e le o código';
-
-        // Repeat the process after a 6-second delay
-        setTimeout(playRandomVideo, 6000);
-      }, 120000);
+      }, 60000);
     }, 6000);
   }
 
   // Start playing the random video when the page loads
   window.onload = playRandomVideo;
+
+  // Repeat the process after a 60-second delay
+  setInterval(playRandomVideo, 60000);
 </script>
 
 </body>
