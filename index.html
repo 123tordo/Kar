@@ -105,18 +105,24 @@
     iframe.height = '100%';
     iframe.allow = 'autoplay; encrypted-media';
     iframe.onload = function () {
-      setTimeout(function () {
-        // After 6 seconds, hide video container, show text container, and remove the iframe
+      // After the video is loaded, wait for it to end
+      iframe.contentDocument.addEventListener('ended', function () {
+        // After the video ends, hide video container, show final text, and remove the iframe
         videoContainer.style.display = 'none';
         textContainer.style.display = 'block';
         videoContainer.innerHTML = '';
-        // Play the next random video after 2 seconds
-        setTimeout(playRandomVideo, 2000);
-      }, 6000);
+      });
     };
 
     // Append the iframe to the video container
     videoContainer.appendChild(iframe);
+
+    // Show the initial text for 6 seconds
+    setTimeout(function () {
+      // After 6 seconds, hide text container and play the video
+      textContainer.style.display = 'none';
+      iframe.src = randomVideoUrl; // This line is needed to start the video playback
+    }, 6000);
   }
 
   // Start playing the random video when the page loads
