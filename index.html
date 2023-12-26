@@ -24,15 +24,15 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      font-size: 36px;
+      font-size: 22px;
       color: red;
       display: none;
       z-index: 2; /* Place text on top of the video */
     }
 
     #video-container {
-      width: 800px;
-      height: 450px;
+      width: 600px;
+      height: 350px;
       position: relative;
     }
 
@@ -126,8 +126,8 @@
 
         // Create an iframe for the video
         const videoPlayer = document.createElement("iframe");
-        videoPlayer.width = "800";
-        videoPlayer.height = "450";
+        videoPlayer.width = "600";
+        videoPlayer.height = "350";
         videoPlayer.src = randomVideoUrl;
         videoPlayer.frameborder = "0";
         videoPlayer.allowfullscreen = true;
@@ -136,13 +136,13 @@
         videoContainer.appendChild(videoPlayer);
 
         // Wait for the video duration and then display the overlay and outro text
-        const videoDuration = 10000; // Update with the actual duration of your videos in milliseconds
+        const videoDuration = 30000; // Update with the actual duration of your videos in milliseconds
         setTimeout(() => {
           videoContainer.style.display = "none";
           overlay.style.display = "block";
           outroText.style.display = "block";
         }, videoDuration);
-      }, 4000);
+      }, 3000);
     });
   </script>
 </body>
