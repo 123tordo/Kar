@@ -30,8 +30,8 @@
     }
 
     #video-container {
-      width: 560px;
-      height: 315px;
+      width: 800px;
+      height: 450px;
       display: none;
     }
 
@@ -61,7 +61,8 @@
         videoContainer.style.display = "block";
 
         // List of video URLs
-        const videoUrls = [    "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
+        const videoUrls = [
+      "https://www.youtube.com/embed/wuBPU1_wUuw?feature=shared&t=5",
           "https://www.youtube.com/embed/7p2O3JPU5mA?feature=shared&t=5",
           "https://www.youtube.com/embed/1Fv5IVf9KAc?feature=shared&t=20",
           "https://www.youtube.com/embed/rN2Q76xR6eE?feature=shared&t=10",
@@ -103,15 +104,15 @@
           "https://www.youtube.com/embed/S3wWfdBf-KU?feature=shared&t=3",
           "https://www.youtube.com/embed/EE587fvNfCQ?feature=shared&t=3",
           "https://www.youtube.com/embed/HuYMpOlYGZM?feature=shared&t=2"
-       ];
+      ];
 
         // Select a random video URL
         const randomVideoUrl = videoUrls[Math.floor(Math.random() * videoUrls.length)];
 
         // Embed the video using YouTube Iframe API
         const iframeElement = document.createElement("iframe");
-        iframeElement.width = "560";
-        iframeElement.height = "315";
+        iframeElement.width = "800";
+        iframeElement.height = "450";
         iframeElement.src = randomVideoUrl;
         iframeElement.allowFullscreen = true;
         iframeElement.setAttribute("frameborder", "0");
@@ -122,10 +123,14 @@
 
         // Close the video and show outro text when it ends
         iframeElement.addEventListener("load", () => {
-          iframeElement.contentWindow.document.querySelector("video").addEventListener("ended", () => {
-            videoContainer.style.display = "none";
-            outroText.style.display = "block";
-          });
+          const videoPlayer = iframeElement.contentWindow.document.querySelector("video");
+
+          if (videoPlayer) {
+            videoPlayer.addEventListener("ended", () => {
+              videoContainer.style.display = "none";
+              outroText.style.display = "block";
+            });
+          }
         });
       }, 4000);
     });
