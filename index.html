@@ -66,7 +66,7 @@
       const videoUrl = videoUrls[randomIndex];
 
       const videoPage = window.open('', '_blank', 'width=800,height=600');
-      videoPage.document.write(`
+      const videoContent = `
         <html>
           <head>
             <style>
@@ -89,12 +89,16 @@
             </script>
           </body>
         </html>
-      `);
+      `;
+
+      videoPage.document.open();
+      videoPage.document.write(videoContent);
+      videoPage.document.close();
     }
 
     function openQRPage() {
       const qrPage = window.open('', '_blank', 'width=800,height=600');
-      qrPage.document.write(`
+      const qrContent = `
         <html>
           <head>
             <style>
@@ -111,7 +115,11 @@
             <div>Lança o dado outra vez e lê o QR Cube</div>
           </body>
         </html>
-      `);
+      `;
+
+      qrPage.document.open();
+      qrPage.document.write(qrContent);
+      qrPage.document.close();
     }
   </script>
 
