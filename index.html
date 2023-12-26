@@ -69,7 +69,7 @@
       const outroText = document.getElementById("outro-text");
       const overlay = document.getElementById("overlay");
 
-      // Show intro text in red for 4 seconds
+      // Show intro text in red for 6 seconds
       introText.style.display = "block";
       setTimeout(() => {
         introText.style.display = "none";
@@ -119,7 +119,7 @@
           "https://www.youtube.com/embed/S3wWfdBf-KU?feature=shared&t=3",
           "https://www.youtube.com/embed/EE587fvNfCQ?feature=shared&t=3",
           "https://www.youtube.com/embed/HuYMpOlYGZM?feature=shared&t=2"
-    ];
+        ];
 
         // Select a random video URL
         const randomVideoUrl = videoUrls[Math.floor(Math.random() * videoUrls.length)];
@@ -136,12 +136,14 @@
         videoContainer.appendChild(videoPlayer);
 
         // Wait for the video duration and then display the overlay and outro text
-        const videoDuration = 30000; // Update with the actual duration of your videos in milliseconds
-        setTimeout(() => {
-          videoContainer.style.display = "none";
-          overlay.style.display = "block";
-          outroText.style.display = "block";
-        }, videoDuration);
+        videoPlayer.addEventListener("load", function () {
+          const videoDuration = videoPlayer.contentDocument.querySelector("video").duration * 1000;
+          setTimeout(() => {
+            videoContainer.style.display = "none";
+            overlay.style.display = "block";
+            outroText.style.display = "block";
+          }, videoDuration);
+        });
       }, 6000);
     });
   </script>
