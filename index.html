@@ -79,8 +79,9 @@
       videoContainer.innerHTML = '';
       videoContainer.appendChild(iframe);
 
-      // After 120 seconds, hide video container and show text container
+      // After 120 seconds, stop the video, hide video container, and show text container
       setTimeout(function () {
+        iframe.src = '';  // Stop the video
         videoContainer.style.display = 'none';
         textContainer.style.display = 'block';
 
